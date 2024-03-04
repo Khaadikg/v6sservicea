@@ -52,25 +52,14 @@ public class TextSorter {
         }
     }
 
-    private static List<String> sortLines(List<String> lines, int sortingCriteria, String optional) {
+    private static List<String> sortLines(List<String> lines, int sortingCriteria, int wordIndex) {
         List<String> sortedLines = new ArrayList<>(lines);
         switch (sortingCriteria) {
             case 1 -> Collections.sort(sortedLines);
             case 2 -> sortedLines.sort(Comparator.comparingInt(String::length));
-            case 3 -> sortedLines.sort(Comparator.comparingInt(line -> countOccurrences(line, optional)));
+            case 3 -> sortedLines.sort(Comparator.comparing(s -> s.split("\\s+")[wordIndex]));
             default -> System.out.println("Неправильно введен номер!");
         }
         return sortedLines;
-    }
-
-    private static int countOccurrences(String line, String word) {
-        String[] words = line.split("\\s+");
-        int count = 0;
-        for (String w : words) {
-            if (w.equals(word)) {
-                count++;
-            }
-        }
-        return count;
     }
 }
